@@ -3,7 +3,7 @@ import * as dependencyGraph from './dependency-graph'
 import * as github from '@actions/github'
 import styles from 'ansi-styles'
 import {RequestError} from '@octokit/request-error'
-import {Change, Severity, Changes} from './schemas'
+import {Change, Severity, Changes, ConfigurationOptions} from './schemas'
 import {readConfig} from '../src/config'
 import {
   filterChangesBySeverity,
@@ -21,8 +21,6 @@ import {getDeniedChanges} from './denylist'
 async function run(): Promise<void> {
   try {
     const config = await readConfig()
-
-    console.log(config)
 
     const refs = getRefs(config, github.context)
 
@@ -70,6 +68,8 @@ async function run(): Promise<void> {
       filteredChanges,
       config.deny_list
     )
+
+    printDeniedDependencies(deniedChanges, config)
 
     summary.addSummaryToSummary(
       vulnerableChanges,
@@ -245,6 +245,22 @@ function printScannedDependencies(changes: Changes): void {
         core.info(`${renderScannedDependency(change)}`)
       }
     }
+  })
+}
+
+function printDeniedDependencies(
+  changes: Change[],
+  config: ConfigurationOptions
+): void {
+  core.group('Denied', async () => {
+    config.deny_list.forEach(denied => {
+      core.info(`Config: ${denied}`)
+    })
+
+    changes.forEach(change => {
+      core.info(`Change: ${change.name}@${change.version} is denied`)
+      core.info(`Change: ${change.package_url} is denied`)
+    })
   })
 }
 
