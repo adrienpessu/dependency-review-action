@@ -22,6 +22,8 @@ async function run(): Promise<void> {
   try {
     const config = await readConfig()
 
+    console.log(config)
+
     const refs = getRefs(config, github.context)
 
     const comparison = await dependencyGraph.compare({
