@@ -216,7 +216,7 @@ export function addScannedDependencies(changes: Changes): void {
   const dependencies = groupDependenciesByManifest(changes)
   const manifests = dependencies.keys()
 
-  const summary = core.summary.addHeading('Scanned Manifest Files', 2)
+  const summary = core.summary.addHeading('Scanned Manifest Files aaaaaaa', 2)
 
   for (const manifest of manifests) {
     const deps = dependencies.get(manifest)
