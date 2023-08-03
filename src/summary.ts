@@ -20,7 +20,8 @@ export function addSummaryToSummary(
 
   if (
     vulnerableChanges.length === 0 &&
-    countLicenseIssues(invalidLicenseChanges) === 0
+    countLicenseIssues(invalidLicenseChanges) === 0 &&
+    deniedChanges.length === 0
   ) {
     if (!config.license_check) {
       core.summary.addRaw(`${icons.check} No vulnerabilities found.`)
