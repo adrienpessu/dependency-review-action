@@ -39,8 +39,6 @@ export function addSummaryToSummary(
     return
   }
 
-
-
   core.summary
     .addRaw('The following issues were found:')
     .addList([
@@ -255,9 +253,7 @@ function countLicenseIssues(
   )
 }
 
-export function addDeniedToSummary(
-  deniedChanges: Change[]
-): void {
+export function addDeniedToSummary(deniedChanges: Change[]): void {
   if (deniedChanges.length === 0) {
     return
   }

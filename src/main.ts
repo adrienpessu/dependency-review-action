@@ -257,14 +257,14 @@ function printDeniedDependencies(
   config: ConfigurationOptions
 ): void {
   core.group('Denied', async () => {
-    config.deny_list.forEach(denied => {
+    for (const denied of config.deny_list) {
       core.info(`Config: ${denied}`)
-    })
+    }
 
-    changes.forEach(change => {
+    for (const change of changes) {
       core.info(`Change: ${change.name}@${change.version} is denied`)
       core.info(`Change: ${change.package_url} is denied`)
-    })
+    }
   })
 }
 
