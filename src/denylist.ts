@@ -9,9 +9,6 @@ export async function getDeniedChanges(
     change.name = change.name.toLowerCase()
     change.package_url = change.package_url.toLowerCase()
 
-    console.log(change.name)
-    console.log(change.package_url)
-
     const founded =
       deniedList.filter(
         denied =>

@@ -17,7 +17,6 @@ import {getRefs} from './git-refs'
 import {groupDependenciesByManifest} from './utils'
 import {commentPr} from './comment-pr'
 import {getDeniedChanges} from './denylist'
-import {addDeniedToSummary} from "./summary";
 
 async function run(): Promise<void> {
   try {
@@ -64,6 +63,8 @@ async function run(): Promise<void> {
         licenseExclusions: config.allow_dependencies_licenses
       }
     )
+
+    core.info(`filteredChanges: ${JSON.stringify(filteredChanges)}`)
 
     const deniedChanges = await getDeniedChanges(
       filteredChanges,
