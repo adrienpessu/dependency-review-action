@@ -64,7 +64,7 @@ async function run(): Promise<void> {
       }
     )
 
-    core.info(`filteredChanges: ${JSON.stringify(filteredChanges)}`)
+    core.debug(`filteredChanges: ${JSON.stringify(filteredChanges)}`)
 
     const deniedChanges = await getDeniedChanges(
       filteredChanges,
