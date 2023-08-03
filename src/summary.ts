@@ -17,6 +17,9 @@ export function addSummaryToSummary(
   config: ConfigurationOptions
 ): void {
   core.summary.addHeading('Dependency Review', 1)
+  core.summary.addHeading(`denied count : ${deniedChanges.length}`, 2)
+
+  core.summary.addList(deniedChanges.map(change => `${change.name} is denied`))
 
   if (
     vulnerableChanges.length === 0 &&
@@ -36,7 +39,7 @@ export function addSummaryToSummary(
     return
   }
 
-  core.summary.addList(deniedChanges.map(change => `${change.name} is denied`))
+
 
   core.summary
     .addRaw('The following issues were found:')
