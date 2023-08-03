@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import {ConfigurationOptions, Changes} from './schemas'
+import {ConfigurationOptions, Changes, Change} from './schemas'
 import {SummaryTableRow} from '@actions/core/lib/summary'
 import {InvalidLicenseChanges, InvalidLicenseChangeTypes} from './licenses'
 import {groupDependenciesByManifest, getManifestsSet, renderUrl} from './utils'
@@ -249,6 +249,19 @@ function countLicenseIssues(
     (acc, val) => acc + val.length,
     0
   )
+}
+
+export function addDeniedToSummary(
+  deniedChanges: Change[]
+): void {
+  if (deniedChanges.length === 0) {
+    return
+  }
+
+  core.summary.addHeading('Denied dependencies', 2)
+  for (const change of deniedChanges) {
+    core.summary.addRaw(`${change.name} is denied`)
+  }
 }
 
 function checkOrFailIcon(count: number): string {

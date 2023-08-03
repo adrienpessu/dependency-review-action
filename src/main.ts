@@ -17,6 +17,7 @@ import {getRefs} from './git-refs'
 import {groupDependenciesByManifest} from './utils'
 import {commentPr} from './comment-pr'
 import {getDeniedChanges} from './denylist'
+import {addDeniedToSummary} from "./summary";
 
 async function run(): Promise<void> {
   try {
@@ -69,8 +70,6 @@ async function run(): Promise<void> {
       config.deny_list
     )
 
-    printDeniedDependencies(deniedChanges, config)
-
     summary.addSummaryToSummary(
       vulnerableChanges,
       invalidLicenseChanges,
@@ -89,6 +88,10 @@ async function run(): Promise<void> {
     if (config.license_check) {
       summary.addLicensesToSummary(invalidLicenseChanges, config)
       printLicensesBlock(invalidLicenseChanges)
+    }
+    if (config.deny_list) {
+      summary.addDeniedToSummary(deniedChanges)
+      printDeniedDependencies(deniedChanges, config)
     }
 
     summary.addScannedDependencies(changes)
