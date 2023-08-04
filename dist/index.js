@@ -1025,9 +1025,6 @@ function addDeniedToSummary(deniedChanges) {
     }
     core.summary.addHeading('Denied dependencies', 2);
     for (const change of deniedChanges) {
-        core.summary.addRaw(`${change.name} is denied`);
-    }
-    for (const change of deniedChanges) {
         core.summary.addHeading(`<em>Denied dependencies</em>`, 4);
         core.summary.addTable([
             ['Package', 'Version', 'License'],
