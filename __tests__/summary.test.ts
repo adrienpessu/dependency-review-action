@@ -93,7 +93,12 @@ test('only includes "No vulnerabilities or license issues found"-message if both
 
 test('only includes "No vulnerabilities found"-message if "license_check" is set to false and nothing was found', () => {
   const config = {...defaultConfig, license_check: false}
-  summary.addSummaryToSummary(emptyChanges, emptyInvalidLicenseChanges, emptyChanges, config)
+  summary.addSummaryToSummary(
+    emptyChanges,
+    emptyInvalidLicenseChanges,
+    emptyChanges,
+    config
+  )
   const text = core.summary.stringify()
 
   expect(text).toContain('✅ No vulnerabilities found.')
@@ -101,7 +106,12 @@ test('only includes "No vulnerabilities found"-message if "license_check" is set
 
 test('only includes "No license issues found"-message if "vulnerability_check" is set to false and nothing was found', () => {
   const config = {...defaultConfig, vulnerability_check: false}
-  summary.addSummaryToSummary(emptyChanges, emptyInvalidLicenseChanges, emptyChanges, config)
+  summary.addSummaryToSummary(
+    emptyChanges,
+    emptyInvalidLicenseChanges,
+    emptyChanges,
+    config
+  )
   const text = core.summary.stringify()
 
   expect(text).toContain('✅ No license issues found.')
@@ -147,7 +157,12 @@ test('includes count and status icons for all findings', () => {
     unlicensed: [createTestChange(), createTestChange(), createTestChange()]
   }
 
-  summary.addSummaryToSummary(vulnerabilities, licenseIssues, emptyChanges, defaultConfig)
+  summary.addSummaryToSummary(
+    vulnerabilities,
+    licenseIssues,
+    emptyChanges,
+    defaultConfig
+  )
 
   const text = core.summary.stringify()
   expect(text).toContain('❌ 2 vulnerable package(s)')
@@ -184,7 +199,12 @@ test('uses checkmarks for vulnerabilities if only license issues were found', ()
     unlicensed: []
   }
 
-  summary.addSummaryToSummary(emptyChanges, licenseIssues, emptyChanges, defaultConfig)
+  summary.addSummaryToSummary(
+    emptyChanges,
+    licenseIssues,
+    emptyChanges,
+    defaultConfig
+  )
 
   const text = core.summary.stringify()
   expect(text).toContain('✅ 0 vulnerable package(s)')
