@@ -64,13 +64,13 @@ async function run(): Promise<void> {
       }
     )
 
-    core.debug(`filteredChanges: ${JSON.stringify(filteredChanges)}`)
-    core.debug(`invalidLicenseChanges: ${JSON.stringify(invalidLicenseChanges)}`)
-
     const deniedChanges = await getDeniedChanges(
       filteredChanges,
       config.deny_list
     )
+
+    core.debug(`filteredChanges: ${JSON.stringify(filteredChanges)}`)
+    core.debug(`deniedChanges: ${JSON.stringify(deniedChanges)}`)
 
     summary.addSummaryToSummary(
       vulnerableChanges,
