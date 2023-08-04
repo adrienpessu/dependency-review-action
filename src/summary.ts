@@ -63,7 +63,7 @@ export function addSummaryToSummary(
         ? [
             `${checkOrWarnIcon(deniedChanges.length)} ${
               deniedChanges.length
-            } package(s) denied by denylist.`
+            } package(s) denied.`
           ]
         : [])
     ])
@@ -218,7 +218,7 @@ export function addScannedDependencies(changes: Changes): void {
   const dependencies = groupDependenciesByManifest(changes)
   const manifests = dependencies.keys()
 
-  const summary = core.summary.addHeading('Scanned Manifest Files aaaaaaa', 2)
+  const summary = core.summary.addHeading('Scanned Manifest Files', 2)
 
   for (const manifest of manifests) {
     const deps = dependencies.get(manifest)
@@ -265,6 +265,17 @@ export function addDeniedToSummary(deniedChanges: Change[]): void {
   core.summary.addHeading('Denied dependencies', 2)
   for (const change of deniedChanges) {
     core.summary.addRaw(`${change.name} is denied`)
+  }
+  for (const change of deniedChanges) {
+    core.summary.addHeading(`<em>Denied dependencies</em>`, 4)
+    core.summary.addTable([
+      ['Package', 'Version', 'License'],
+      [
+        renderUrl(change.source_repository_url, change.name),
+        change.version,
+        change.license || ''
+      ]
+    ])
   }
 }
 

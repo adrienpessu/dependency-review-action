@@ -876,7 +876,7 @@ function addSummaryToSummary(vulnerableChanges, invalidLicenseChanges, deniedCha
             : []),
         ...(deniedChanges.length > 0
             ? [
-                `${checkOrWarnIcon(deniedChanges.length)} ${deniedChanges.length} package(s) denied by denylist.`
+                `${checkOrWarnIcon(deniedChanges.length)} ${deniedChanges.length} package(s) denied.`
             ]
             : [])
     ])
@@ -992,7 +992,7 @@ function formatLicense(license) {
 function addScannedDependencies(changes) {
     const dependencies = (0, utils_1.groupDependenciesByManifest)(changes);
     const manifests = dependencies.keys();
-    const summary = core.summary.addHeading('Scanned Manifest Files aaaaaaa', 2);
+    const summary = core.summary.addHeading('Scanned Manifest Files', 2);
     for (const manifest of manifests) {
         const deps = dependencies.get(manifest);
         if (deps) {
@@ -1026,6 +1026,17 @@ function addDeniedToSummary(deniedChanges) {
     core.summary.addHeading('Denied dependencies', 2);
     for (const change of deniedChanges) {
         core.summary.addRaw(`${change.name} is denied`);
+    }
+    for (const change of deniedChanges) {
+        core.summary.addHeading(`<em>Denied dependencies</em>`, 4);
+        core.summary.addTable([
+            ['Package', 'Version', 'License'],
+            [
+                (0, utils_1.renderUrl)(change.source_repository_url, change.name),
+                change.version,
+                change.license || ''
+            ]
+        ]);
     }
 }
 exports.addDeniedToSummary = addDeniedToSummary;
