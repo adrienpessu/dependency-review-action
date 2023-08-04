@@ -845,8 +845,6 @@ const icons = {
 };
 function addSummaryToSummary(vulnerableChanges, invalidLicenseChanges, deniedChanges, config) {
     core.summary.addHeading('Dependency Review', 1);
-    core.summary.addHeading(`denied count : ${deniedChanges.length}`, 2);
-    core.summary.addList(deniedChanges.map(change => `${change.name} is denied`));
     if (vulnerableChanges.length === 0 &&
         countLicenseIssues(invalidLicenseChanges) === 0 &&
         deniedChanges.length === 0) {
@@ -874,6 +872,11 @@ function addSummaryToSummary(vulnerableChanges, invalidLicenseChanges, deniedCha
                 `${checkOrFailIcon(invalidLicenseChanges.forbidden.length)} ${invalidLicenseChanges.forbidden.length} package(s) with incompatible licenses`,
                 `${checkOrFailIcon(invalidLicenseChanges.unresolved.length)} ${invalidLicenseChanges.unresolved.length} package(s) with invalid SPDX license definitions`,
                 `${checkOrWarnIcon(invalidLicenseChanges.unlicensed.length)} ${invalidLicenseChanges.unlicensed.length} package(s) with unknown licenses.`
+            ]
+            : []),
+        ...(deniedChanges.length > 0
+            ? [
+                `${checkOrWarnIcon(deniedChanges.length)} ${deniedChanges.length} package(s) denied by denylist.`
             ]
             : [])
     ])

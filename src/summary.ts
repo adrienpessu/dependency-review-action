@@ -17,9 +17,6 @@ export function addSummaryToSummary(
   config: ConfigurationOptions
 ): void {
   core.summary.addHeading('Dependency Review', 1)
-  core.summary.addHeading(`denied count : ${deniedChanges.length}`, 2)
-
-  core.summary.addList(deniedChanges.map(change => `${change.name} is denied`))
 
   if (
     vulnerableChanges.length === 0 &&
@@ -60,6 +57,13 @@ export function addSummaryToSummary(
             `${checkOrWarnIcon(invalidLicenseChanges.unlicensed.length)} ${
               invalidLicenseChanges.unlicensed.length
             } package(s) with unknown licenses.`
+          ]
+        : []),
+      ...(deniedChanges.length > 0
+        ? [
+            `${checkOrWarnIcon(deniedChanges.length)} ${
+              deniedChanges.length
+            } package(s) denied by denylist.`
           ]
         : [])
     ])
