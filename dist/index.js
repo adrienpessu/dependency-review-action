@@ -159,9 +159,10 @@ function getDeniedChanges(changes, deniedList) {
         for (const change of changes) {
             change.name = change.name.toLowerCase();
             change.package_url = change.package_url.toLowerCase();
-            const founded = deniedList.filter(denied => change.name.includes(denied) || change.package_url.includes(denied)).length > 0;
-            if (founded) {
-                changesDenied.push(change);
+            for (const denied of deniedList) {
+                if (change.name.includes(denied)) {
+                    changesDenied.push(change);
+                }
             }
         }
         return changesDenied;

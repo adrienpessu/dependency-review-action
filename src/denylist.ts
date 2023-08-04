@@ -1,4 +1,5 @@
 import {Change} from './schemas'
+
 export async function getDeniedChanges(
   changes: Change[],
   deniedList: string[]
@@ -9,13 +10,10 @@ export async function getDeniedChanges(
     change.name = change.name.toLowerCase()
     change.package_url = change.package_url.toLowerCase()
 
-    const founded =
-      deniedList.filter(
-        denied =>
-          change.name.includes(denied) || change.package_url.includes(denied)
-      ).length > 0
-    if (founded) {
-      changesDenied.push(change)
+    for (const denied of deniedList) {
+      if (change.name.includes(denied)) {
+        changesDenied.push(change)
+      }
     }
   }
 
