@@ -550,6 +550,7 @@ function run() {
                 licenseExclusions: config.allow_dependencies_licenses
             });
             core.debug(`filteredChanges: ${JSON.stringify(filteredChanges)}`);
+            core.debug(`invalidLicenseChanges: ${JSON.stringify(invalidLicenseChanges)}`);
             const deniedChanges = yield (0, denylist_1.getDeniedChanges)(filteredChanges, config.deny_list);
             summary.addSummaryToSummary(vulnerableChanges, invalidLicenseChanges, deniedChanges, config);
             if (snapshot_warnings) {
