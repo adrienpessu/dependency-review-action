@@ -69,6 +69,7 @@ async function run(): Promise<void> {
       config.deny_list
     )
 
+    core.debug(`config: ${JSON.stringify(config)}`)
     core.debug(`filteredChanges: ${JSON.stringify(filteredChanges)}`)
     core.debug(`deniedChanges: ${JSON.stringify(deniedChanges)}`)
 
